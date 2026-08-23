@@ -16,6 +16,7 @@ class Discriminator(nn.Module):
         super().__init__()
 
         self.network = nn.Sequential(
+            # [B, 3, 64, 64] -> [B, 64, 32, 32]
             nn.Conv2d(
                 image_channels,
                 features,
@@ -26,6 +27,7 @@ class Discriminator(nn.Module):
             ),
             nn.LeakyReLU(0.2, inplace=True),
 
+            # [B, 64, 32, 32] -> [B, 128, 16, 16]
             nn.Conv2d(
                 features,
                 features * 2,
@@ -37,6 +39,7 @@ class Discriminator(nn.Module):
             nn.BatchNorm2d(features * 2),
             nn.LeakyReLU(0.2, inplace=True),
 
+            # [B, 128, 16, 16] -> [B, 256, 8, 8]
             nn.Conv2d(
                 features * 2,
                 features * 4,
@@ -48,6 +51,7 @@ class Discriminator(nn.Module):
             nn.BatchNorm2d(features * 4),
             nn.LeakyReLU(0.2, inplace=True),
 
+            # [B, 256, 8, 8] -> [B, 512, 4, 4]
             nn.Conv2d(
                 features * 4,
                 features * 8,
@@ -59,6 +63,7 @@ class Discriminator(nn.Module):
             nn.BatchNorm2d(features * 8),
             nn.LeakyReLU(0.2, inplace=True),
 
+            # [B, 512, 4, 4] -> [B, 1, 1, 1]
             nn.Conv2d(
                 features * 8,
                 1,
@@ -67,7 +72,6 @@ class Discriminator(nn.Module):
                 padding=0,
                 bias=False,
             ),
-            nn.Sigmoid(),
         )
 
     def forward(self, image: torch.Tensor) -> torch.Tensor:

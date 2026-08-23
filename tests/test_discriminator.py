@@ -13,15 +13,14 @@ def test_discriminator_output_shape():
     assert output.shape == (4, 1, 1, 1)
 
 
-def test_discriminator_output_range():
+def test_discriminator_output_is_finite():
     discriminator = Discriminator()
 
     images = torch.randn(4, 3, 64, 64)
 
     output = discriminator(images)
 
-    assert output.min().item() >= 0.0
-    assert output.max().item() <= 1.0
+    assert torch.isfinite(output).all()
 
 
 def test_discriminator_preserves_batch_size():
