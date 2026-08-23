@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+
+# Environment variables
+.env
+
+# Node / React
+node_modules/
+frontend/dist/
+
+# Training data
+data/
+
+# Trained model files
+models/*.pt
+models/*.pth
+
+# Training outputs
+outputs/
+checkpoints/
+
+# IDE
+.vscode/
